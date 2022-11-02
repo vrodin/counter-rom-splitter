@@ -20,7 +20,8 @@ def main(argv):
 	with open('output.bin', "wb") as output:
 		for fl in files:
 			with open(fl[0], "rb") as f:
-				output.write(f.read() + bytes(0xFF for i in range(biggestRomSize - fl[1])))
+				data = f.read()
+				output.write( (data + bytes(0xFF for i in range(biggestRomSize - fl[1])))[:-16] + data[-16:] )
 				f.close()
 	
 		output.close()
